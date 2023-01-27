@@ -25,11 +25,11 @@ local RunService = game:GetService("RunService")
 local Player = PlayersService.LocalPlayer
 
 --// Singleton ----------------------------------------------------------------
-local CustomCamera = {}
-CustomCamera.__index = CustomCamera
+local RXCamera = {}
+RXCamera.__index = RXCamera
 
 --// Constructor --------------------------------------------------------------
-function CustomCamera.new()
+function RXCamera.new()
 	local self = setmetatable({
 
 		--// Update keys
@@ -49,23 +49,23 @@ function CustomCamera.new()
 		_settings = {
 
 			DEFAULT_OFFSET = Vector3.new(0, 2, 8),
-			LOCKED_OFFSET = Vector3.new(2.5, 2.5, 8),
+			LOCKED_OFFSET = Vector3.new(2, 2, 8),
 			SENSITIVITY = 0.5,
 
 		},
 
-	}, CustomCamera)
+	}, RXCamera)
 	return self
 end
 
 --// Private ------------------------------------------------------------------
-function CustomCamera:_updateInputDelta(inputObject: InputObject)
+function RXCamera:_updateInputDelta(inputObject: InputObject)
 	local inputDelta = inputObject.Delta * self._settings.SENSITIVITY
 	self._inputDeltaX -= inputDelta.X
 	self._inputDeltaY = math.clamp(self._inputDeltaY - inputDelta.Y, self._angleLimitsY.Min, self._angleLimitsY.Max)
 end
 
-function CustomCamera:_update(rootPart: Part)
+function RXCamera:_update(rootPart: Part)
 
 	--// Adress presets
 	workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
@@ -104,7 +104,7 @@ function CustomCamera:_update(rootPart: Part)
 end
 
 --// Public -------------------------------------------------------------------
-function CustomCamera:Enable()
+function RXCamera:Enable()
 
 	--// Update input delta
 	ContextActionService:BindAction(self._updateKeyInput, function(actionName, inputState, inputObject)
@@ -127,17 +127,17 @@ function CustomCamera:Enable()
 
 end
 
-function CustomCamera:SetLockEnabled(toggle: boolean)
+function RXCamera:SetLockEnabled(toggle: boolean)
 	assert(typeof(toggle) == "boolean", "[-] Custom Camera Error: Toggle must be a boolean")
 	self._lockEnabled = toggle
 end
 
-function CustomCamera:SetMouseLocked(toggle: boolean)
+function RXCamera:SetMouseLocked(toggle: boolean)
 	assert(typeof(toggle) == "boolean", "[-] Custom Camera Error: Toggle must be a boolean")
 	self._mouseLocked = toggle
 end
 
-function CustomCamera:Disable()
+function RXCamera:Disable()
 
 	--// Disable input update
 	ContextActionService:UnbindAction(self._updateKeyInput)
@@ -153,4 +153,4 @@ function CustomCamera:Disable()
 	UserInputService.MouseIconEnabled = true
 end
 
-return CustomCamera.new()
+return RXCamera.new()
