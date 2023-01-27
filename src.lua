@@ -121,19 +121,19 @@ function RXCamera:Enable()
 			self:_update(rootPart)
 		else
 			self:Disable()
-			warn("Custom Camera Disabled: HumanoidRootPart not found!")
+			warn("RX Camera Disabled: HumanoidRootPart not found!")
 		end	
 	end)
 
 end
 
 function RXCamera:SetLockEnabled(toggle: boolean)
-	assert(typeof(toggle) == "boolean", "[-] Custom Camera Error: Toggle must be a boolean")
+	assert(typeof(toggle) == "boolean", "[-] RX Camera Error: Toggle must be a boolean!")
 	self._lockEnabled = toggle
 end
 
 function RXCamera:SetMouseLocked(toggle: boolean)
-	assert(typeof(toggle) == "boolean", "[-] Custom Camera Error: Toggle must be a boolean")
+	assert(typeof(toggle) == "boolean", "[-] RX Camera Error: Toggle must be a boolean!")
 	self._mouseLocked = toggle
 end
 
